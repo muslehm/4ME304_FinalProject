@@ -46,6 +46,11 @@ b- to visualize the word cloud
 Place wordcloud.json file in directory
 run project from lines 52 to 87
 
+c- Lines 89 to 112 contains a code for a basic sentiment analysis
+First place the location of your file with the tokenized and cleaned words list, same one used for the word cloud analysis.
+The code first prepares the data into a format readable by the method
+Import the needed libraries
+Run the function that extracts sentiment words and analyzes them.
 
 2) The real-time data analysis:
 
@@ -53,3 +58,11 @@ StreamingKMeans
 ----------------
 Insert your twitter credentials
 Run the project box by box and wait for the streaming to finish.
+
+TwitterStreamingAnalyzer.scala
+-------------------
+Open the project in Scala IDE
+Add your twitter credentials
+Compile the project by clicking on project folder > Properties > Scala Compiler
+Then, run the file as Scala Project and wait for the output
+The training model is saved int he output, along with a json file of the dataset used for prediction
