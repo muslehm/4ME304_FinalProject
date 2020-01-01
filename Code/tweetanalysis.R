@@ -86,3 +86,27 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
           max.words=50, random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
 
+#Sentinment analysis
+## The source for part of the code below is https://www.kaggle.com/rtatman/tutorial-sentiment-analysis-in-r
+library(tidyverse)
+library(tidytext)
+library(glue)
+library(stringr)
+
+#Prepare our dataset
+json_data <- stream_in(file("~/Downloads/wordcloud.json"))
+json_data <- as.list(json_data$filtered)
+df <- data.frame(matrix(unlist(json_data), nrow=length(json_data), byrow=T))
+vec<-unlist(df)
+vec <- as.list(levels(vec))
+vec <- as.data.frame(vec)
+vec <- t(vec)
+vec <- as.data.frame(vec)
+names(vec)[names(vec) == "V1"] <- "word"
+
+# get the sentiment from the first text: 
+vec %>%
+  inner_join(get_sentiments("bing")) %>% # pull out only sentiment words
+  count(sentiment) %>% # count the # of positive & negative words
+  spread(sentiment, n, fill = 0) %>% # made data wide rather than narrow
+  mutate(sentiment = positive - negative) # # of positive words - # of negative owrds
